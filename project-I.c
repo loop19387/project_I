@@ -14,6 +14,8 @@ struct info
 };
 
 int main (){
+   FILE *fp;
+   fp = fopen("proj.txt","a");
     char w='Y';
     struct info i;
     i.rate = 2000;
@@ -39,17 +41,18 @@ int main (){
        printf("\n");
         }
       while (1) {
-        printf("\n--- What action do you want to do? ---\n");
+        printf("\n   What action do you want to do?  \n");
         printf("1. Book Participants\n");
         printf("2. Log Time\n");
         printf("3. Exit\n");
         printf("Enter Choice (1-3): ");
         scanf("%d", &choice);
 
-        if (choice == 3) break;
+         if (choice == 3) 
+            break;
 
-        switch (choice) {
-            case 1: // SECTION A: BOOK PARTICIPANTS
+          switch (choice) {
+             case 1: // SECTION A: BOOK PARTICIPANTS
                 printf("\n--- Booking Function ---\n");
                 printf("Enter Booker Name: \n ");
                 getchar();
@@ -65,10 +68,15 @@ int main (){
                 printf("Booking ID: %d\n", i.g_id);
                 printf("Name: %s\n", i.nm);
                 printf("Schedule: %d PM - %d PM\n", i.g_id, i.g_id + i.hrs);
+            
                 printf("Total Amount: Rs %d\n", i.total_amt);
+                fprintf(fp, "Name: %s \n", i.nm);
+                fprintf(fp, "Booking ID: %d\n", i.g_id);
+                fprintf(fp, "Schedule: %d PM - %d PM\n", i.g_id, i.g_id + i.hrs);
+                fprintf(fp, "Total Amount: Rs %d\n", i.total_amt);   
                 break;
 
-            case 2: // SECTION B: LOG TIME
+             case 2: // SECTION B: LOG TIME
                 printf("\n--- Log Time ---\n");
                 printf("Enter Booking ID to start: ");
                 scanf("%d", &i.g_id);
@@ -76,7 +84,7 @@ int main (){
                 printf("Do you want to start the game? (y/n): ");
                 scanf(" %c", &confirm);
 
-                if (confirm == 'y' || confirm == 'Y') {
+                 if (confirm == 'y' || confirm == 'Y') {
                     time(&i.strt_t);
                     printf("Game Started at: %s", ctime(&i.strt_t));
                     
@@ -87,18 +95,21 @@ int main (){
                     time(&i.end_t);
                     i.time_diff = difftime(i.end_t, i.strt_t);
                     
-                    printf("Game Ended. Total Duration: %.2f seconds.\n", i.time_diff);
+                    printf("Game Ended. Total Duration: %f seconds.\n", i.time_diff);
+                    fprintf(fp,"time duration: %f \n",i.time_diff);
                     printf(" Match Completed Successfully!\n");
-                }
-                break;
+                 }
+             break;
 
-            default:
+             default:
                 printf("Invalid choice!\n");
         }
     }
 
-    printf("Exiting... Thank you!\n");
+    printf("Exiting !!!!!! Thank you!!!!!!!!!!\n");
+    fclose (fp);
     return 0;
 }
 }
-   
+  //	If you use a (append mode), all bookings are saved, and new bookings are added at the end. 
+  // 	If you use w (write mode) every time someone makes a booking, all previous bookings will be lost.
